@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio — Kamen Rider S.I.C. Hero Saga Translations</title>
+  <meta name="description" content="Biblioteca de traducciones de las historias Kamen Rider S.I.C. Hero Saga, con modo oscuro/claro, selector de idioma y sinopsis." />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS (CDN + configuración) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Bebas Neue"', "sans-serif"],
+            sans: ["Inter", "system-ui", "sans-serif"]
+          },
+          colors: {
+            rider: { DEFAULT: "#dc2626", dark: "#991b1b" }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Evitar destello (FOUC) del tema antes de cargar Tailwind -->
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("kr-sic-theme"); } catch (e) {}
+      if (t === "light") { document.documentElement.classList.remove("dark"); }
+      else if (t === "dark") { document.documentElement.classList.add("dark"); }
+      else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+      }
+    })();
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    /* Estado activo del selector de idioma */
+    .lang-item.is-active { color: #dc2626; font-weight: 700; }
+    .lang-item.is-active .lang-check { display: inline-flex; }
+    .lang-check { display: none; }
+    /* Píldoras de filtro */
+    .filter-pill.is-active { background-color: #dc2626; color: #fff; border-color: #dc2626; }
+    /* Barra de desplazamiento */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #71717a; border-radius: 9999px; }
+    .dark ::-webkit-scrollbar-thumb { background: #3f3f46; }
+  </style>
+</head>
+
+<body class="bg-zinc-50 font-sans text-zinc-900 transition-colors duration-300 dark:bg-zinc-950 dark:text-zinc-100">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-red-600 focus:px-4 focus:py-2 focus:text-white" data-i18n="nav.skip">Saltar al contenido</a>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="sticky top-0 z-40 border-b border-zinc-200 bg-white/80 backdrop-blur-lg dark:border-zinc-800 dark:bg-zinc-950/80">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8" aria-label="Navegación principal">
+      <a href="index.html" class="flex shrink-0 items-center gap-2.5">
+        <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-red-600 to-red-900 font-display text-lg text-white shadow-lg shadow-red-900/30">SIC</span>
+        <span class="leading-tight">
+          <span class="block font-display text-lg tracking-wide text-zinc-900 dark:text-white">KAMEN RIDER <span class="text-red-600">S.I.C.</span></span>
+          <span class="block text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400" data-i18n="hero.kicker">Traducciones de las Hero Saga</span>
+        </span>
+      </a>
+
+      <ul class="hidden items-center gap-1 lg:flex">
+        <li><a href="index.html" aria-current="page" class="rounded-lg px-3 py-2 text-sm font-semibold text-red-600 underline decoration-red-600 decoration-2 underline-offset-8 dark:text-red-400" data-i18n="nav.home">Inicio</a></li>
+        <li><a href="historias.html" class="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:text-red-600 dark:text-zinc-300 dark:hover:text-red-400" data-i18n="nav.stories">Historias</a></li>
+        <li><a href="series.html" class="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:text-red-600 dark:text-zinc-300 dark:hover:text-red-400" data-i18n="nav.series">Series</a></li>
+        <li><a href="actualizaciones.html" class="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:text-red-600 dark:text-zinc-300 dark:hover:text-red-400" data-i18n="nav.updates">Actualizaciones</a></li>
+        <li><a href="sobre.html" class="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:text-red-600 dark:text-zinc-300 dark:hover:text-red-400" data-i18n="nav.about">Sobre</a></li>
+        <li><a href="contacto.html" class="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:text-red-600 dark:text-zinc-300 dark:hover:text-red-400" data-i18n="nav.contact">Contacto</a></li>
+      </ul>
+
+      <div class="flex items-center gap-2">
+        <!-- Selector de idioma -->
+        <div class="relative">
+          <button type="button" data-lang-toggle="lang-menu" aria-expanded="false" aria-haspopup="true" class="flex items-center gap-1.5 rounded-lg border border-zinc-300 px-2.5 py-2 text-sm font-medium text-zinc-700 transition hover:border-red-500 hover:text-red-600 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-red-500 dark:hover:text-red-400">
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.75 2.25a.75.75 0 01.75.75v11.69l2.72-2.72a.75.75 0 111.06 1.06l-4 4a.75.75 0 01-1.06 0l-4-4a.75.75 0 111.06-1.06l2.72 2.72V3a.75.75 0 01.75-.75z" clip-rule="evenodd"/></svg>
+            <span data-lang-current>ES</span>
+          </button>
+          <div id="lang-menu" data-lang-menu class="absolute right-0 z-50 mt-2 hidden w-44 overflow-hidden rounded-xl border border-zinc-200 bg-white py-1 shadow-xl dark:border-zinc-700 dark:bg-zinc-900">
+            <button type="button" data-lang-btn="es" class="lang-item flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800">Español <span class="lang-check ml-auto text-red-600"><svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg></span></button>
+            <button type="button" data-lang-btn="en" class="lang-item flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800">English <span class="lang-check ml-auto text-red-600"><svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg></span></button>
+          </div>
+        </div>
+
+        <!-- Toggle de tema -->
+        <button type="button" data-theme-btn class="flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 text-zinc-700 transition hover:border-red-500 hover:text-red-600 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-red-500 dark:hover:text-red-400" aria-label="Cambiar tema">
+          <svg class="icon-light h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zM10 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 15zM10 7a3 3 0 100 6 3 3 0 000-6zM15.657 5.404a.75.75 0 10-1.06-1.06l-1.061 1.06a.75.75 0 001.06 1.06l1.06-1.06zM6.464 14.596a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 001.06 1.06l1.06-1.06zM18 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0118 10zM5 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 015 10zM14.596 15.657a.75.75 0 001.06-1.06l-1.06-1.061a.75.75 0 10-1.06 1.06l1.06 1.06zM5.404 6.464a.75.75 0 001.06-1.06l-1.06-1.06a.75.75 0 10-1.06 1.06l1.06 1.06z"/></svg>
+          <svg class="icon-dark hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.455 2.004a.75.75 0 01.26.77 7 7 0 009.958 7.967.75.75 0 011.067.853A8.5 8.5 0 116.647 1.921a.75.75 0 01.808.083z" clip-rule="evenodd"/></svg>
+        </button>
+
+        <!-- Botón menú móvil -->
+        <button type="button" data-mobile-menu-btn class="flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 text-zinc-700 transition hover:border-red-500 hover:text-red-600 dark:border-zinc-700 dark:text-zinc-200 lg:hidden" aria-expanded="false" aria-label="Abrir menú">
+          <svg class="icon-open h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clip-rule="evenodd"/></svg>
+          <svg class="icon-close hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Menú móvil -->
+    <div data-mobile-menu class="hidden border-t border-zinc-200 dark:border-zinc-800 lg:hidden">
+      <ul class="space-y-1 px-4 py-3">
+        <li><a href="index.html" aria-current="page" class="block rounded-lg bg-red-600/10 px-3 py-2 text-sm font-semibold text-red-600 dark:text-red-400" data-i18n="nav.home">Inicio</a></li>
+        <li><a href="historias.html" class="block rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800" data-i18n="nav.stories">Historias</a></li>
+        <li><a href="series.html" class="block rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800" data-i18n="nav.series">Series</a></li>
+        <li><a href="actualizaciones.html" class="block rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800" data-i18n="nav.updates">Actualizaciones</a></li>
+        <li><a href="sobre.html" class="block rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800" data-i18n="nav.about">Sobre</a></li>
+        <li><a href="contacto.html" class="block rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800" data-i18n="nav.contact">Contacto</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ===================== MAIN ===================== -->
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="relative overflow-hidden bg-zinc-950 text-white">
+      <img src="assets/img/covers/lost-train.jpg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-20" aria-hidden="true" />
+      <div class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/85 to-zinc-950/20"></div>
+      <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-zinc-50 to-transparent dark:from-zinc-950"></div>
+      <div class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-28 lg:px-8 lg:py-36">
+        <p class="mb-3 inline-flex items-center gap-2 rounded-full border border-red-500/40 bg-red-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-red-400" data-i18n="hero.kicker">Traducciones de las Hero Saga</p>
+        <h1 class="font-display text-6xl leading-none tracking-wide sm:text-8xl lg:text-9xl">KAMEN RIDER <span class="text-red-600">S.I.C.</span></h1>
+        <p class="mt-6 max-w-2xl text-base leading-relaxed text-zinc-300 sm:text-lg" data-i18n="hero.subtitle">Reunimos las traducciones de las historias S.I.C. Hero Saga de Kamen Rider, organizadas por saga y con sus portadas originales.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="historias.html" class="inline-flex items-center gap-2 rounded-xl bg-red-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-red-900/40 transition hover:-translate-y-0.5 hover:bg-red-700" data-i18n="hero.ctaStories">Explorar historias</a>
+          <a href="sobre.html" class="inline-flex items-center gap-2 rounded-xl border border-zinc-600 px-6 py-3 text-sm font-bold text-white transition hover:border-red-500 hover:text-red-400" data-i18n="hero.ctaAbout">Sobre el proyecto</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESTADÍSTICAS -->
+    <section class="mx-auto -mt-12 max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 gap-4 rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900 sm:grid-cols-4">
+        <div class="text-center">
+          <p class="font-display text-4xl text-red-600 sm:text-5xl" data-stat-stories>0</p>
+          <p class="mt-1 text-sm font-medium text-zinc-500 dark:text-zinc-400" data-i18n="home.stats.stories">Historias</p>
+        </div>
+        <div class="text-center">
+          <p class="font-display text-4xl text-red-600 sm:text-5xl" data-stat-series>0</p>
+          <p class="mt-1 text-sm font-medium text-zinc-500 dark:text-zinc-400" data-i18n="home.stats.series">Sagas</p>
+        </div>
+        <div class="text-center">
+          <p class="font-display text-4xl text-red-600 sm:text-5xl" data-stat-episodes>0</p>
+          <p class="mt-1 text-sm font-medium text-zinc-500 dark:text-zinc-400" data-i18n="home.stats.episodes">Episodios</p>
+        </div>
+        <div class="text-center">
+          <p class="font-display text-4xl text-red-600 sm:text-5xl" data-stat-covers>0</p>
+          <p class="mt-1 text-sm font-medium text-zinc-500 dark:text-zinc-400" data-i18n="home.stats.translated">Portadas</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HISTORIAS DESTACADAS (carrusel) -->
+    <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h2 class="font-display text-4xl text-zinc-900 dark:text-white sm:text-5xl" data-i18n="home.featured.title">Historias destacadas</h2>
+          <p class="mt-2 text-zinc-600 dark:text-zinc-400" data-i18n="home.featured.subtitle">Una selección de sagas imprescindibles del universo S.I.C.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" data-carousel-prev class="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-300 text-zinc-600 transition hover:border-red-500 hover:text-red-600 dark:border-zinc-700 dark:text-zinc-300" aria-label="Anterior">
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd"/></svg>
+          </button>
+          <button type="button" data-carousel-next class="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-300 text-zinc-600 transition hover:border-red-500 hover:text-red-600 dark:border-zinc-700 dark:text-zinc-300" aria-label="Siguiente">
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div data-carousel-track class="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"></div>
+      <div data-carousel-dots class="mt-4 flex items-center justify-center gap-2"></div>
+      <div class="mt-8 text-center">
+        <a href="historias.html" class="inline-flex items-center gap-2 rounded-xl border border-red-600 px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-600 hover:text-white" data-i18n="home.featured.viewAll">Ver todas las historias</a>
+      </div>
+    </section>
+
+    <!-- EXPLORA POR SAGA -->
+    <section class="border-y border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900/50">
+      <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 class="font-display text-4xl text-zinc-900 dark:text-white sm:text-5xl" data-i18n="home.series.title">Explora por saga</h2>
+            <p class="mt-2 text-zinc-600 dark:text-zinc-400" data-i18n="home.series.subtitle">Desde la era Showa hasta los Riders Heisei.</p>
+          </div>
+          <a href="series.html" class="inline-flex items-center gap-2 text-sm font-bold text-red-600 hover:text-red-700 dark:text-red-400" data-i18n="home.series.viewAll">Ver todas las sagas</a>
+        </div>
+        <div data-series-preview class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+      </div>
+    </section>
+
+    <!-- BANNER CTA -->
+    <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-700 via-red-600 to-red-900 px-8 py-14 text-center text-white shadow-2xl sm:px-12">
+        <div class="pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full bg-white/10 blur-2xl"></div>
+        <div class="pointer-events-none absolute -bottom-16 -left-10 h-56 w-56 rounded-full bg-black/20 blur-2xl"></div>
+        <h2 class="relative font-display text-4xl sm:text-5xl" data-i18n="home.banner.title">¿Listo para transformarte?</h2>
+        <p class="relative mx-auto mt-3 max-w-xl text-red-100" data-i18n="home.banner.text">Sumérgete en el universo S.I.C. y lee las Hero Saga completas, episodio a episodio.</p>
+        <a href="historias.html" class="relative mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-red-700 shadow-lg transition hover:-translate-y-0.5 hover:bg-red-50" data-i18n="home.banner.cta">Abrir la biblioteca</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+    <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+        <div>
+          <a href="index.html" class="flex items-center gap-2.5">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-red-600 to-red-900 font-display text-lg text-white">SIC</span>
+            <span class="font-display text-lg tracking-wide text-zinc-900 dark:text-white">KAMEN RIDER <span class="text-red-600">S.I.C.</span></span>
+          </a>
+          <p class="mt-4 max-w-xs text-sm leading-relaxed text-zinc-600 dark:text-zinc-400" data-i18n="footer.tagline">Traducciones de las Hero Saga de S.I.C. reunidas en un solo lugar.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold uppercase tracking-wider text-zinc-900 dark:text-white" data-i18n="footer.quick">Enlaces rápidos</h4>
+          <ul class="mt-4 space-y-2 text-sm">
+            <li><a href="index.html" class="text-zinc-600 transition hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-400" data-i18n="nav.home">Inicio</a></li>
+            <li><a href="historias.html" class="text-zinc-600 transition hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-400" data-i18n="nav.stories">Historias</a></li>
+            <li><a href="series.html" class="text-zinc-600 transition hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-400" data-i18n="nav.series">Series</a></li>
+            <li><a href="actualizaciones.html" class="text-zinc-600 transition hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-400" data-i18n="nav.updates">Actualizaciones</a></li>
+            <li><a href="sobre.html" class="text-zinc-600 transition hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-400" data-i18n="nav.about">Sobre</a></li>
+            <li><a href="contacto.html" class="text-zinc-600 transition hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-400" data-i18n="nav.contact">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold uppercase tracking-wider text-zinc-900 dark:text-white" data-i18n="footer.source">Fuente original</h4>
+          <p class="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Este proyecto toma como referencia el blog:</p>
+          <a href="https://kamenridersictranslations.wordpress.com" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-2 rounded-lg border border-zinc-300 px-3 py-2 text-sm font-medium text-zinc-700 transition hover:border-red-500 hover:text-red-600 dark:border-zinc-700 dark:text-zinc-200">
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M12.232 4.232a2.5 2.5 0 013.536 3.536l-1.225 1.224a.75.75 0 001.061 1.06l1.224-1.224a4 4 0 00-5.656-5.656l-3 3a4 4 0 00.225 5.865.75.75 0 00.977-1.138 2.5 2.5 0 01-.142-3.667l3-3z"/><path d="M11.603 7.963a.75.75 0 00-.977 1.138 2.5 2.5 0 01.142 3.667l-3 3a2.5 2.5 0 01-3.536-3.536l1.225-1.224a.75.75 0 00-1.061-1.06l-1.224 1.224a4 4 0 105.656 5.656l3-3a4 4 0 00-.225-5.865z"/></svg>
+            kamenridersictranslations.wordpress.com
+          </a>
+          <p class="mt-4 text-xs leading-relaxed text-zinc-500 dark:text-zinc-500" data-i18n="footer.disclaimer">Sitio no oficial creado con fines académicos y de demostración UI/UX. Kamen Rider es © Toei / Ishimori Productions.</p>
+        </div>
+      </div>
+      <div class="mt-10 flex flex-col items-center justify-between gap-3 border-t border-zinc-200 pt-6 text-center text-xs text-zinc-500 dark:border-zinc-800 dark:text-zinc-500 sm:flex-row sm:text-left">
+        <p>© 2026 Kamen Rider S.I.C. — <span data-i18n="footer.rights">Todos los derechos reservados.</span></p>
+        <p data-i18n="footer.made">Proyecto web estático de demostración (HTML + Tailwind CSS + JavaScript).</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Botón volver arriba -->
+  <button type="button" data-scroll-top class="pointer-events-none fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-red-600 text-white opacity-0 shadow-lg shadow-red-900/40 transition hover:bg-red-700" aria-label="Volver arriba" data-i18n-aria="top.label">
+    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z" clip-rule="evenodd"/></svg>
+  </button>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/theme.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
